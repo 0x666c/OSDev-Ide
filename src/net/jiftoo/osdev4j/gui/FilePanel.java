@@ -2,11 +2,12 @@ package net.jiftoo.osdev4j.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import javax.swing.Icon;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
@@ -19,6 +20,8 @@ import javax.swing.border.LineBorder;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreePath;
+
+import org.luaj.vm2.ast.Str;
 
 import net.jiftoo.osdev4j.control.Controller;
 import net.jiftoo.osdev4j.control.FileNode;
@@ -53,10 +56,11 @@ public class FilePanel extends JPanel {
 		tree.setMinimumSize(new Dimension(100, 600));
 		tree.setBorder(new EmptyBorder(5,5,5,5));
 		
-		DefaultTreeCellRenderer r = (DefaultTreeCellRenderer)tree.getCellRenderer();
+		CustomListRenderer r = new CustomListRenderer();
 		r.setLeafIcon(Icons.file);
-		r.setClosedIcon(Icons.folderClosed);
-		r.setOpenIcon(Icons.folderOpen);
+		r.setClosedIcon(Icons.folder);
+		r.setOpenIcon(Icons.folder);
+		tree.setCellRenderer(r);
 		
 		tree.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
@@ -85,6 +89,52 @@ public class FilePanel extends JPanel {
 	
 	public JProgressBar getParsingProgressBar() {
 		return parsingProgress;
+	}
+	
+	private static final class CustomListRenderer extends DefaultTreeCellRenderer {
+		
+		@Override
+		public Component getTreeCellRendererComponent(JTree tree, Object value, boolean sel, boolean expanded,
+				boolean leaf, int row, boolean hasFocus) {
+			super.getTreeCellRendererComponent(tree, value, sel, expanded, leaf, row, hasFocus);
+			
+	        Object nodeObj = ((DefaultMutableTreeNode) value).getUserObject();
+	        
+	        if(leaf) {
+	        	String str = nodeObj.toString();
+	        	
+	        	if(str.contains(".")) {
+	        		String[] ext = nodeObj.toString().split("\\.");
+		        	str = ext[ext.length - 1];
+	        	} else {
+	        		str = "NotAnExtension";
+	        	}
+	        	
+		        switch (str) {
+				case "asm":
+					setIcon(Icons.asm);
+					break;
+					
+				case "c":
+					setIcon(Icons.c);
+					break;
+					
+				case "cpp":
+					setIcon(Icons.cpp);
+					break;
+					
+				case "h":
+					setIcon(Icons.h);
+					break;
+					
+				default:
+					setIcon(Icons.file);
+					break;
+				}
+	        }
+	        return this;
+		}
+		
 	}
 	
 }
