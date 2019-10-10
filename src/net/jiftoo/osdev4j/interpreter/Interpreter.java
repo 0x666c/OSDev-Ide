@@ -4,7 +4,6 @@ import java.util.HashMap;
 
 import net.jiftoo.osdev4j.interpreter.jsimpl.JSInterpreter;
 import net.jiftoo.osdev4j.interpreter.luaimpl.LuaInterpreter;
-import net.jiftoo.osdev4j.interpreter.pyimpl.PythonInterpreter;
 
 public abstract class Interpreter {
 		
@@ -16,8 +15,6 @@ public abstract class Interpreter {
 	public static void init() {
 		availableInterpreters.put("lua", new LuaInterpreter());
 		availableInterpreters.put("js", new JSInterpreter());
-		
-		//LoadingPipeline.createAsyncLoadTask(new LTask("python", false, () -> availableInterpreters.put("python", new PythonInterpreter())), time -> InterpreterControlsPanel.pyLoaded());
 	}
 	
 	/**

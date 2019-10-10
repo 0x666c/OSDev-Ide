@@ -61,7 +61,7 @@ public class OSDev {
 	 * @wbp.parser.entryPoint
 	 */
 	private static void createGUI() {
-		mainFrame = new JFrame(VERSION);
+		mainFrame = new JFrame("OSDev IDE v" + VERSION);
 		
 		mainFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		
