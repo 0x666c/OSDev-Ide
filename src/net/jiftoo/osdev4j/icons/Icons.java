@@ -1,7 +1,6 @@
 package net.jiftoo.osdev4j.icons;
 
 import java.awt.Image;
-import java.awt.image.BufferedImage;
 
 import javax.imageio.ImageIO;
 import javax.swing.Icon;

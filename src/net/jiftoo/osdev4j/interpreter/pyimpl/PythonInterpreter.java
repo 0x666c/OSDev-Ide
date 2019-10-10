@@ -1,7 +1,5 @@
 package net.jiftoo.osdev4j.interpreter.pyimpl;
 
-import org.python.antlr.PythonParser.return_stmt_return;
-
 import net.jiftoo.osdev4j.interpreter.Interpreter;
 
 public class PythonInterpreter extends Interpreter {

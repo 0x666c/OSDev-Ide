@@ -22,9 +22,9 @@ import net.jiftoo.osdev4j.gui.FilePanel;
 import net.jiftoo.osdev4j.gui.LaunchControlPanel;
 import net.jiftoo.osdev4j.gui.MenuBar;
 import net.jiftoo.osdev4j.icons.Icons;
-import net.jiftoo.osdev4j.init.LaunchSplashScreen.LTask;
+import net.jiftoo.osdev4j.init.Task;
+import net.jiftoo.osdev4j.init.TaskPipeline;
 import net.jiftoo.osdev4j.interpreter.Interpreter;
-import net.jiftoo.osdev4j.init.LoadingPipeline;
 
 public class OSDev {
 	
@@ -44,10 +44,10 @@ public class OSDev {
 		// Don't use the task pipeline since the splashscreen uses icons
 	    Icons.load();
 	    
-	    LoadingPipeline pipeline = new LoadingPipeline();
+	    TaskPipeline pipeline = TaskPipeline.loading();
 	    
-	    pipeline.queueTask(new LTask("gui", true, OSDev::createGUI));
-	    pipeline.queueTask(new LTask("script-engines", false, Interpreter::init));
+	    pipeline.queueTask(new Task("gui", true, OSDev::createGUI));
+	    pipeline.queueTask(new Task("script-engines", false, Interpreter::init));
 		
 	    pipeline.execute();
 	    
@@ -158,6 +158,8 @@ public class OSDev {
 		mainFrame.setSize(1000, 700);
 		mainFrame.setLocationRelativeTo(null);
 		
+		codePane.focus();
+		
 		/*new Thread(() -> {
 			try {
 				WatchService ws = FileSystems.getDefault().newWatchService();
@@ -176,7 +178,6 @@ public class OSDev {
 		}).start();*/
 		
 		// Focus on the first tab
-//	TODO:	codePane.focus();
 	}
 	
 	//private static Taskbar tb = Taskbar.getTaskbar();

@@ -1,4 +1,4 @@
-package net.jiftoo.osdev4j.init;
+package net.jiftoo.osdev4j.init.plimpl;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -102,23 +102,4 @@ public class LaunchSplashScreen {
 		latch.countDown();
 	}
 	
-	public static class LTask {
-		private final String info;
-		private final Runnable task;
-		
-		public LTask(String info, boolean awt, Runnable task) {
-			this.info = info;
-			this.task = awt ? new Runnable() {
-				public void run() {
-					try {
-						SwingUtilities.invokeAndWait(task::run);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-			} : task;
-		}
-		public void run() {task.run();}
-		public String info() {return info;}
-	}
 }
