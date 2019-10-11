@@ -7,7 +7,6 @@ import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import javax.swing.DefaultListCellRenderer;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
@@ -20,8 +19,6 @@ import javax.swing.border.LineBorder;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreePath;
-
-import org.luaj.vm2.ast.Str;
 
 import net.jiftoo.osdev4j.control.Controller;
 import net.jiftoo.osdev4j.control.FileNode;

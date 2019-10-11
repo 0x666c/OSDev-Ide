@@ -23,7 +23,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
@@ -52,7 +54,7 @@ public class CodeEditorPanel extends JPanel {
 		setPreferredSize(new Dimension(500, 500));
 		setMinimumSize(new Dimension(100, 100));
 		
-		tabbedPane.setBorder(new EmptyBorder(0,0,0,2));
+		tabbedPane.setBorder(new CompoundBorder(new EmptyBorder(2,0,0,2), new LineBorder(Color.BLACK)));
 		add(tabbedPane, BorderLayout.CENTER);
 	}
 	

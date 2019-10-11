@@ -16,15 +16,16 @@ import javax.swing.plaf.basic.BasicSplitPaneDivider;
 import javax.swing.plaf.basic.BasicSplitPaneUI;
 
 import net.jiftoo.osdev4j.control.Controller;
+import net.jiftoo.osdev4j.gui.BottomPanel;
 import net.jiftoo.osdev4j.gui.CodeEditorPanel;
 import net.jiftoo.osdev4j.gui.ConsolePanel;
 import net.jiftoo.osdev4j.gui.FilePanel;
-import net.jiftoo.osdev4j.gui.LaunchControlPanel;
 import net.jiftoo.osdev4j.gui.MenuBar;
 import net.jiftoo.osdev4j.icons.Icons;
 import net.jiftoo.osdev4j.init.Task;
 import net.jiftoo.osdev4j.init.TaskPipeline;
 import net.jiftoo.osdev4j.interpreter.Interpreter;
+import net.jiftoo.osdev4j.modules.gui.ModulePanel;
 
 public class OSDev {
 	
@@ -33,6 +34,7 @@ public class OSDev {
 	public static void main(String[] args) throws Exception {
 		System.setProperty("sun.java2d.noddraw", Boolean.TRUE.toString());
 		System.out.println(System.getProperty("java.version"));
+		
 		// Fix JTabbedPane
 		UIManager.getDefaults().put("TabbedPane.contentBorderInsets", new Insets(0,0,0,0));
 	    UIManager.getDefaults().put("TabbedPane.tabAreaInsets", new Insets(5,0,0,20));
@@ -100,12 +102,15 @@ public class OSDev {
 		CodeEditorPanel codePane = new CodeEditorPanel();
 		ConsolePanel consolePane = new ConsolePanel();
 		FilePanel filePane = new FilePanel(codePane);
-		LaunchControlPanel launchControlPanel = new LaunchControlPanel(codePane);
+		ModulePanel launchControlPanel = new ModulePanel(codePane);
 		
 		MenuBar menuBar = new MenuBar();
+		BottomPanel bottomPanel = new BottomPanel();
 		
 		/////
+		
 		cp.add(launchControlPanel, BorderLayout.NORTH);
+		cp.add(bottomPanel, BorderLayout.SOUTH);
 		/////
 		
 		JSplitPane editorPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
@@ -141,7 +146,7 @@ public class OSDev {
 		
 		cp.add(mainSplitPane, BorderLayout.CENTER);
 		
-		// Menu bar
+	// Menu bar
 		mainFrame.setJMenuBar(menuBar);
 		
 	// Init the controller
@@ -159,25 +164,6 @@ public class OSDev {
 		mainFrame.setLocationRelativeTo(null);
 		
 		codePane.focus();
-		
-		/*new Thread(() -> {
-			try {
-				WatchService ws = FileSystems.getDefault().newWatchService();
-				WatchKey wk = Paths.get("C:\\Users\\User\\Desktop\\test-project\\").register(ws,
-						StandardWatchEventKinds.ENTRY_MODIFY);
-
-				while(true) {
-					WatchKey key = ws.take();
-					key.pollEvents().forEach(event -> {
-						System.out.println(event.context());
-					});
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}).start();*/
-		
-		// Focus on the first tab
 	}
 	
 	//private static Taskbar tb = Taskbar.getTaskbar();
