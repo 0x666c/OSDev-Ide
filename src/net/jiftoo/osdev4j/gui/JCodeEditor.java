@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.lang.reflect.Method;
 import java.util.zip.ZipFile;
 
 import javax.swing.border.LineBorder;
@@ -99,7 +100,19 @@ public class JCodeEditor extends RTextScrollPane {
 				f.deleteOnExit();
 				InputStream is = JCodeEditor.class.getResourceAsStream("english_dic.zip");
 				OutputStream os = new FileOutputStream(f);
-				is.transferTo(os);
+				
+				// Crutch: Only java9+
+				if(System.getenv("java.version").startsWith("1")) { // Java 8<
+					byte[] buffer = new byte[4096];
+					int len;
+					while ((len = is.read(buffer)) != -1) {
+					    os.write(buffer, 0, len);
+					}
+				} else {
+					Method m = is.getClass().getDeclaredMethod("transferTo", OutputStream.class);
+					m.invoke(is, os);
+//					is.transferTo(os);
+				}
 				os.flush();
 				os.close();
 				is.close();
